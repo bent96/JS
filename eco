@@ -1,6 +1,0 @@
-function MK (q,q1,tk,tk1) {
- var MK = (tk-tk1)/(q-q1)
- return MK
-} 
-
-console.log(MK(6,5,25,20)
