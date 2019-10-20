@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grafiek</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+<script>
+    var mkData =[]
+    var quantity = [0,5,10,15,20,25,30,35]
+    var tk  = [10,23,34,44,55,66,80,97]
+    var data = quantity.map((x, idx)  => {
+        return {
+            quantity: x,
+            tk: tk[idx]
+        }
+    })
+
+    function MK (q,q1,tk,tk1) {
+        var MK = (tk-tk1)/(q-q1)
+        return MK
+    }
+    function generateList (fn,data) {
+        var arr = []
+        for (i = 1; i < data.length; i++) {
+            var m_k = fn(data[i].quantity,data[i-1].quantity,data[i].tk,data[i-1].tk)
+            arr.push(m_k)
+        }
+        return arr
+    }
+    mkData = generateList(MK,data)
+
+    document.addEventListener('DOMContentLoaded', function () {
+    var myChart = Highcharts.chart('container', {
+
+        title: {
+            text: 'Marginale kost'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Marginale kost'
+            }
+        },
+        xAxis: {
+            title: {
+                text: 'quantity'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+
+
+        series: [{
+            name: 'marginale Kost',
+            data: mkData
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+}); </script>
+<div id="container" style="width:100%; height:400px;"></div>
+
+</body>
+</html>
